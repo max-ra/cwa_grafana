@@ -1,0 +1,44 @@
+version: '3.9'
+
+networks:
+  proxy:
+    name: backbone_proxy
+    external: true
+  monitoring:
+    name: backbone_monitoring
+    external: true
+
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    user: "9003:9003"
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=backbone_proxy
+      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.rule=Host("${APPLICATION_FQDN}")
+      - traefik.http.routers.grafana.service=grafana-service
+      - traefik.http.services.grafana-service.loadbalancer.server.port=3000
+    environment:
+      TZ: Europe/Berlin
+      # Dual Setup with trafic and nginx
+      VIRTUAL_HOST: stats.mainfranken-racing.de
+      LETSENCRYPT_HOST: stats.mainfranken-racing.de
+      LETSENCRYPT_EMAIL: maximilian.rauch@mainfranken-racing.de
+      # END
+      GF_SECURITY_DISABLE_INITAL_ADMIN_CREATION: true
+      GF_SECURITY_COOKIE_SECURE: true
+      GF_SECURITY_COOKIE_SAMESITE: strict
+      GF_SECURITY_STRICT_TRANSPORT_SECURITY: true
+      GF_SERVER_DOMAIN: "${APPLICATION_FQDN}"
+      GF_SERVER_ROOT_URL: "https://${APPLICATION_FQDN}"
+      GF_USERS_ALLOW_ORG_CREATE: false
+    volumes:
+      - "./grafana:/var/lib/grafana"
+      - "./provisioning:/etc/grafana/provisioning"
+      - "./providers/dashboards:/etc/dashboards"
+    restart: unless-stopped
+    networks:
+      - proxy
+      - monitoring
