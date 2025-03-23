@@ -1,5 +1,3 @@
-version: '3.9'
-
 networks:
   proxy:
     name: backbone_proxy
@@ -16,7 +14,10 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=backbone_proxy
+      - traefik.http.routers.grafana.ruleSyntax=v3
       - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.tls.certresolver=${CERTRESOLVER:-}
+      - traefik.http.routers.grafana.entryPoints=https
       - traefik.http.routers.grafana.rule=Host("${APPLICATION_FQDN}")
       - traefik.http.routers.grafana.service=grafana-service
       - traefik.http.services.grafana-service.loadbalancer.server.port=3000
