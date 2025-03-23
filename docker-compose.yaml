@@ -6,6 +6,10 @@ networks:
     name: backbone_monitoring
     external: true
 
+secrets:
+  admin_password:
+    environment: ADMIN_PASSWORD
+
 services:
   grafana:
     image: grafana/grafana-oss:latest
@@ -23,7 +27,8 @@ services:
       - traefik.http.services.grafana-service.loadbalancer.server.port=3000
     environment:
       TZ: Europe/Berlin
-      GF_SECURITY_DISABLE_INITAL_ADMIN_CREATION: true
+      GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
+      GF_SECURITY_ADMIN_PASSWORD__FILE: "/run/secrets/admin_password"
       GF_SECURITY_COOKIE_SECURE: true
       GF_SECURITY_COOKIE_SAMESITE: strict
       GF_SECURITY_STRICT_TRANSPORT_SECURITY: true
@@ -34,6 +39,8 @@ services:
       - "./grafana:/var/lib/grafana"
       - "./provisioning:/etc/grafana/provisioning"
       - "./providers/dashboards:/etc/dashboards"
+    secrets:
+      - admin_password
     restart: unless-stopped
     networks:
       - proxy
