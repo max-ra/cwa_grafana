@@ -23,11 +23,6 @@ services:
       - traefik.http.services.grafana-service.loadbalancer.server.port=3000
     environment:
       TZ: Europe/Berlin
-      # Dual Setup with trafic and nginx
-      VIRTUAL_HOST: stats.mainfranken-racing.de
-      LETSENCRYPT_HOST: stats.mainfranken-racing.de
-      LETSENCRYPT_EMAIL: maximilian.rauch@mainfranken-racing.de
-      # END
       GF_SECURITY_DISABLE_INITAL_ADMIN_CREATION: true
       GF_SECURITY_COOKIE_SECURE: true
       GF_SECURITY_COOKIE_SAMESITE: strict
