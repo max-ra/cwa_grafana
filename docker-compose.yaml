@@ -40,7 +40,9 @@ services:
       - "./provisioning:/etc/grafana/provisioning"
       - "./providers/dashboards:/etc/dashboards"
     secrets:
-      - admin_password
+      - source: admin_password
+        uid: "9003"
+        gid: "9003"
     restart: unless-stopped
     networks:
       - proxy
