@@ -12,7 +12,7 @@ secrets:
 
 services:
   grafana:
-    image: grafana/grafana-oss:latest
+    image: grafana/grafana-oss:11.5.2
     container_name: grafana
     user: "9003:9003"
     labels:
