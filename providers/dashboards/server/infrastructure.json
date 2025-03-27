@@ -23567,12 +23567,12 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Server Status",
+  "title": "Infrastructure",
   "uid": "rYdddlPWk",
   "version": 3,
   "weekStart": ""
