@@ -2373,7 +2373,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\",device=~\"e(?:np|th)(?:[0-9].?[0-9]+)\"}[$__rate_interval])*8",
+          "expr": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\",device=~\"e(?:np|th)(?:[0-9]?.?[0-9]+)\"}[$__rate_interval])*8",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "recv {{device}}",
@@ -2385,7 +2385,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\",device=~\"e(?:np|th)(?:[0-9].?[0-9]+)\"}[$__rate_interval])*8",
+          "expr": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\",device=~\"e(?:np|th)(?:[0-9]?.?[0-9]+)\"}[$__rate_interval])*8",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "trans {{device}} ",
